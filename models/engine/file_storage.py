@@ -63,5 +63,5 @@ class FileStorage:
         """Delete storage dictionary from file"""
         if obj == None:
             return
-        if obj in __objects:
-            del __objects[obj]
+        if obj in FileStorage.__objects:
+            del FileStorage.__objects[obj]
