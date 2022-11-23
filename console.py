@@ -116,25 +116,32 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, args):
         """ Create an object of any class"""
         
+        try:
+            if not args:
+                raise SyntaxError()
 
-        if not args:
-            raise SyntaxError()
+            param = args.split(" ")
+            obj = eval("{}()".format(param[0]))
 
-        param = args.split(" ")
-        obj = eval("{}()".format(param[0]))
+            for PEPE1 in range(1, len(param)):
+                key, valorin = tuple(param[PEPE1].split("="))
+                valorin = valorin.replace("_", " ")
 
-        for PEPE1 in range(1, len(param)):
-            key, valorin = tuple(param[PEPE1].split("="))
-            valorin = valorin.replace("_", " ")
+                if hasattr(obj, key):
+                    try:
+                        setattr(obj, key, eval(valorin))
+                    except Exception:
+                        pass
 
-            if hasattr(obj, key):
-                try:
-                    setattr(obj, key, eval(valorin))
-                except Exception:
-                    pass
+            storage.save()
+            print(obj.id)
 
-        storage.save()
-        print(obj.id)
+        except SyntaxError:
+            print("** class name missing **")
+        except NameError:
+            print("** class doesn't exist **")
+        except IndexError:
+            pass
 
 
 
