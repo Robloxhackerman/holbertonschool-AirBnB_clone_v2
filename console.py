@@ -116,31 +116,37 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, args):
         """ Create an object of any class"""
         
-        param = args.split(" ")
-        diccionarito = {}
-
-        if not args:
-            print("** class name missing **")
-            return
-        elif param[0] not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        
-        for PEPE1 in range(1, len(param)):
-            key, valorin = tuple(param[PEPE1].split("="))
-            if valorin[0] == '"':
-                valorin = valorin.split('"')
-            else:
-                valorin = eval(valorin)
+        try:
+            param = args.split(" ")
+            diccionarito = {}
+            if not args:
+                raise SyntaxError
+                return
+            elif param[0] not in HBNBCommand.classes:
+                print("** class doesn't exist **")
+                return
+            
+            for PEPE1 in range(1, len(param)):
+                key, valorin = tuple(param[PEPE1].split("="))
+                if valorin[0] == '"':
+                    valorin = valorin.split('"')
+                else:
+                    valorin = eval(valorin)
 
             diccionarito[key] = valorin
-        if diccionarito == {}:
-            obj = eval(param[0])()
-        else:
-            obj = eval(param[0])(**diccionarito)
-            storage.new(obj)
-        print(obj.id)
-        storage.save()
+            if diccionarito == {}:
+                obj = eval(param[0])()
+            else:
+                obj = eval(param[0])(**diccionarito)
+                storage.new(obj)
+            print(obj.id)
+            storage.save()
+
+        except SyntaxError:
+            print("** class name missing **")
+        except NameError:
+            print("** class doesn't exist **")
+
 
     def help_create(self):
         """ Help information for the create method """
