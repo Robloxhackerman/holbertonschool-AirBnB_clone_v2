@@ -63,5 +63,10 @@ class FileStorage:
         """Delete storage dictionary from file"""
         if obj == None:
             return
-        if obj in FileStorage.__objects:
-            del FileStorage.__objects[obj]
+        # All new objects're saved in json in this way:
+        # name of the object + '.' + object.id
+        key = f"{obj.__class__.__name__}.{obj.id}"
+        # if key exists in __object dictionary, we delete this obj
+        if key in self.all():
+            del self.all()[key]
+            self.save()
