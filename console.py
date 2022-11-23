@@ -122,14 +122,14 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        elif param[1] not in HBNBCommand.classes:
+        elif param[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
         
         for PEPE1 in range(1, len(param)):
             key, valorin = tuple(param[PEPE1].split("="))
             if valorin[0] == '"':
-                valorin = valorin.split('"').replace(" ", "_")
+                valorin = valorin.split('"')
             else:
                 valorin = eval(valorin)
 
