@@ -1,17 +1,20 @@
 #!/usr/bin/python3
 from os import getenv
-from sqlalchemy import create_engine
 from models.base_model import Base
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
 from models.amenity import Amenity
+from models.city import City
+from models.place import Place
 from models.review import Review
-from sqlalchemy.orm import sessionmaker
+from models.state import State
+from models.user import User
+from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
+from sqlalchemy.orm import sessionmaker
+
 
 class DBStorage:
+    """aaaa"""
+
     __engine = None
     __session = None
 
@@ -28,46 +31,38 @@ class DBStorage:
 
     def all(self, cls=None):
         """aaaa"""
-
-        diccionarito = dict()
-
         if cls is None:
-            obj = self.__session.query(State).all()
-            obj.extend(self.__session.query(Amenity).all())
-            obj.extend(self.__session.query(City).all())
-            obj.extend(self.__session.query(Place).all())
-            obj.extend(self.__session.query(Review).all())
-            obj.extend(self.__session.query(User).all())
+            objs = self.__session.query(State).all()
+            objs.extend(self.__session.query(City).all())
+            objs.extend(self.__session.query(User).all())
+            objs.extend(self.__session.query(Place).all())
+            objs.extend(self.__session.query(Review).all())
+            objs.extend(self.__session.query(Amenity).all())
         else:
             if type(cls) == str:
                 cls = eval(cls)
-            obj = self.__session.query(cls)
+            objs = self.__session.query(cls)
+        return {"{}.{}".format(type(o).__name__, o.id): o for o in objs}
 
-        for PEPE1 in obj:
-            return ("{}.{}".format(type(PEPE1).__name__, PEPE1.id))
-        
     def new(self, obj):
         """aaaa"""
-
         self.__session.add(obj)
 
     def save(self):
         """aaaa"""
-
         self.__session.commit()
 
     def delete(self, obj=None):
         """aaaa"""
-        
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
         """aaaa"""
         Base.metadata.create_all(self.__engine)
-        sesxsion = sessionmaker(bind=self.__engine,
+        sesion = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
-        Session = scoped_session(sesxsion)
+        Session = scoped_session(sesion)
         self.__session = Session()
 
     def close(self):
