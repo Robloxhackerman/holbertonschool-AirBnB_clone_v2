@@ -4,6 +4,8 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from os import getenv
 from sqlalchemy.orm import relationship
+import models
+from models.city import City
 
 
 class State(BaseModel):
@@ -11,26 +13,16 @@ class State(BaseModel):
 
     __tablename__ = "states"
     
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
-        name = Column(String(128), nullable=False)
-        cities = relationship('City', backref='state',cascade='all, delete-orphan')
-    else:
-        name = ""
+    name = Column(String(128), nullable=False)
+    cities = relationship('City', backref='state',cascade='delete')
 
-        
-    def __init__(self, *args, **kwargs):
-        """aaaa"""
-        
-        super().__init__(*args, **kwargs)
+    if getenv("HBNB_TYPE_STORAGE") != "db":
 
         @property
         def cities(self):
             """aaaa"""
-
-            cities = list()
-
-            for _id, city in models.storage.all(City).items():
-                if city.state_id == self.id:
+            cities = []
+            for cities in list(models.storage.all(City).values()):
+                if cities.state_id == self.id:
                     cities.append(city)
-
             return cities
