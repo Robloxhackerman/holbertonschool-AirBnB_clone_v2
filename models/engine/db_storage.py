@@ -39,8 +39,10 @@ class DBStorage:
         else:
             if type(cls) == str:
                 cls = eval(cls)
-            objs = self.__session.query(cls)
-        return {"{}.{}".format(type(PEPE1).__name__, PEPE1.id): PEPE1 for PEPE1 in objs}
+            obj = self.__session.query(cls)
+
+        for PEPE1 in obj:
+            return ("{}.{}".format(type(PEPE1).__name__, PEPE1.id))
         
     def new(self, obj):
         """aaaa"""
