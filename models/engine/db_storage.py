@@ -29,8 +29,6 @@ class DBStorage:
     def all(self, cls=None):
         """aaaa"""
 
-        diccionarito = dict()
-
         if cls is None:
             obj = self.__session.query(State).all()
             obj.extend(self.__session.query(Amenity).all())
@@ -41,10 +39,8 @@ class DBStorage:
         else:
             if type(cls) == str:
                 cls = eval(cls)
-            obj = self.__session.query(cls)
-
-        for PEPE1 in obj:
-            return ("{}.{}".format(type(PEPE1).__name__, PEPE1.id))
+            objs = self.__session.query(cls)
+        return {"{}.{}".format(type(PEPE1).__name__, PEPE1.id): PEPE1 for PEPE1 in objs}
         
     def new(self, obj):
         """aaaa"""
