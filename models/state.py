@@ -17,6 +17,12 @@ class State(BaseModel):
     else:
         name = ""
 
+        
+    def __init__(self, *args, **kwargs):
+        """aaaa"""
+        
+        super().__init__(*args, **kwargs)
+
         @property
         def cities(self):
             """aaaa"""
