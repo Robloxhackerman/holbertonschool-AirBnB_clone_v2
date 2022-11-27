@@ -4,16 +4,17 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from os import getenv
 from sqlalchemy.orm import relationship
+from models.city import City
+from models import storage
 
 
 class State(BaseModel):
     """ State class """
-
-    __tablename__ = "states"
     
     if getenv('HBNB_TYPE_STORAGE') == 'db':
+        __tablename__ = "states"
         name = Column(String(128), nullable=False)
-        cities = relationship('City', backref='state',cascade='all, delete-orphan')
+        cities = relationship('City', backref='state', cascade='all, delete-orphan')
     else:
         name = ""
 
@@ -21,10 +22,9 @@ class State(BaseModel):
         def cities(self):
             """aaaa"""
 
-            cities = list()
+            result = []
 
-            for _id, city in models.storage.all(City).items():
-                if city.state_id == self.id:
-                    cities.append(city)
-
-            return cities
+            for key in storage.all(City).values():
+                if self.id == City.state_id:
+                    result.append(storage.all(City)[key])
+            return result
