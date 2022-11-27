@@ -17,22 +17,17 @@ class DBStorage:
 
     def __init__(self):
         """aaaa"""
-
-        db = "{}+{}://{}:{}@{}:3306/{}".format(
-            'mysql', 'mysqldb', getenv('HBNB_MYSQL_USER'),
-            getenv('HBNB_MYSQL_PWD'), getenv('HBNB_MYSQL_HOST'),
-            getenv('HBNB_MYSQL_DB'))
-
-        self.__engine = create_engine(db, pool_pre_ping=True)
-        self.reload()
-
-        if getenv('HBNB_ENV') == 'test':
+        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".
+                                      format(getenv("HBNB_MYSQL_USER"),
+                                             getenv("HBNB_MYSQL_PWD"),
+                                             getenv("HBNB_MYSQL_HOST"),
+                                             getenv("HBNB_MYSQL_DB")),
+                                      pool_pre_ping=True)
+        if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """aaaa"""
-
-        diccionarito = dict()
 
         if cls is None:
             obj = self.__session.query(State).all()
@@ -68,9 +63,8 @@ class DBStorage:
     def reload(self):
         """aaaa"""
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine,
-                                       expire_on_commit=False)
-        Session = scoped_session(session_factory)
+        sessions = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(sessions)
         self.__session = Session()
 
     def close(self):

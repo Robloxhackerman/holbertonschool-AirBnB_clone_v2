@@ -21,10 +21,8 @@ class State(BaseModel):
         @property
         def cities(self):
             """aaaa"""
-
-            result = []
-
-            for key in storage.all(City).values():
-                if self.id == City.state_id:
-                    result.append(storage.all(City)[key])
-            return result
+            cities = []
+            for cities in list(models.storage.all(City).values()):
+                if cities.state_id == self.id:
+                    cities.append(city)
+            return cities

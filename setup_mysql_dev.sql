@@ -1,3 +1,4 @@
+-- Active: 1667584254284@@127.0.0.1@3306@hbnb_dev_db
 -- hmmm
 -- hmmm
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
