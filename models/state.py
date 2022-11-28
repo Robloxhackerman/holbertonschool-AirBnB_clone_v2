@@ -5,8 +5,6 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from os import getenv
 from sqlalchemy.orm import relationship
 from models.city import City
-from models import storage
-
 
 class State(BaseModel):
     """ State class """
@@ -18,6 +16,7 @@ class State(BaseModel):
     else:
         name = ""
 
+    if getenv('HBNB_TYPE_STORAGE') != "db":
         @property
         def cities(self):
             """aaaa"""
