@@ -7,14 +7,18 @@ app = Flask(__name__)
 
 @app.route('/')
 def holinga():
+    """aaaa"""
     return("Hello HBNB!")
 
 @app.route('/HBNB')
 def hbnb():
+    """aaaa"""
     return("HBNB")
 
 @app.route('/c/<text>', )
-def method_name():
-    pass
+def c(text=None):
+    """aaaa"""
+    return "C " + str(text).replace("_", " ")
 
-app.run(host="0.0.0.0")
+if __name__ == '__main__':
+    app.run(host="0.0.0.0")
