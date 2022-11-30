@@ -11,6 +11,7 @@ def holinga():
     """aaaa"""
     return("Hello HBNB!")
 
+
 @app.route('/HBNB')
 def hbnb():
     """aaaa"""
