@@ -31,10 +31,11 @@ def python(text="is cool"):
     return "Python " + str(text).replace("_", " ")
 
 
-@app.route('/number/<n>', strict_slashes=False)
-def is_this_a_number(n=0):
-    if int(n):
-        return n + " is a number"
+@app.route('/number/<int:n>', strict_slashes=False)
+def is_this_a_number(n):
+    """aaaa"""
+    return "{} is a number".format(n)
+
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port= 5000)
+    app.run(host="0.0.0.0", port=5000)
