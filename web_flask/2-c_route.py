@@ -12,7 +12,7 @@ def holinga():
     return("Hello HBNB!")
 
 
-@app.route('/HBNB')
+@app.route('/hbnb')
 def hbnb():
     """aaaa"""
     return("HBNB")
