@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def holinga():
+def index():
     """aaaa"""
     return("Hello HBNB!")
 
@@ -26,11 +26,12 @@ def c(text=None):
 
 
 @app.route('/python/<text>', strict_slashes=False)
-def c(text="is cool"):
+@app.route('/python', strict_slashes=False)
+def pitonsito(text="is cool"):
     """aaaa"""
     return "Python " + str(text).replace("_", " ")
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     """aaaaaaaaaa"""
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=5000)
