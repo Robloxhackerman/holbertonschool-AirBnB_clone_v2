@@ -1,15 +1,9 @@
 #!/usr/bin/python3
-"""sumary_line
-
-Keyword arguments:
-argument -- description
-Return: return_description
-"""
-
+"""aaaa"""
 from flask import Flask
 
 app = Flask(__name__)
-"""aaaa"""
+#piporipopaporepo
 
 @app.route('/', strict_slashes=False)
 def holinga():
