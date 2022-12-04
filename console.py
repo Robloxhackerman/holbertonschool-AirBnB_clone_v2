@@ -120,30 +120,29 @@ class HBNBCommand(cmd.Cmd):
             if not args:
                 raise SyntaxError()
 
-            param = args.split(" ")
-            obj = eval("{}()".format(param[0]))
+            splittedArgs = args.split(" ")
+            inst = eval("{}()".format(splittedArgs[0]))
 
-            for PEPE1 in range(1, len(param)):
-                key, valorin = tuple(param[PEPE1].split("="))
-                valorin = valorin.replace("_", " ")
+            for commandArg in splittedArgs[1:]:
+                param = commandArg.split("=")
+                key = param[0]
+                value = param[1].replace("_", " ")
 
-                if hasattr(obj, key):
+                if hasattr(inst, key):
                     try:
-                        setattr(obj, key, eval(valorin))
+                        setattr(inst, key, eval(value))
                     except Exception:
                         pass
 
-            storage.save()
-            print(obj.id)
+            inst.save()
 
+            print("{}".format(inst.id))
         except SyntaxError:
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
         except IndexError:
             pass
-
-
 
     def help_create(self):
         """ Help information for the create method """

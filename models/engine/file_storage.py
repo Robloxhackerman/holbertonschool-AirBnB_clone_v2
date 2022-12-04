@@ -60,16 +60,13 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """Delete storage dictionary from file"""
-        if obj == None:
-            return
-        # All new objects're saved in json in this way:
-        # name of the object + '.' + object.id
-        key = f"{obj.__class__.__name__}.{obj.id}"
-        # if key exists in __object dictionary, we delete this obj
-        if key in self.all():
-            del self.all()[key]
-            self.save()
+        """aaa"""
+        if obj:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+
+            if self.__objects[key]:
+                del self.__objects[key]
+                self.save()
 
     def close(self):
         """aaaa"""
